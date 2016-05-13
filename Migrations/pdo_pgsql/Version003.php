@@ -16,11 +16,6 @@ class Version003 extends AbstractMigration implements ContainerAwareInterface
     /*
      * @var Client
      */
-    private $tyrClient;
-
-    /*
-     * @var Client
-     */
     private $fenrirClient;
 
     /*
@@ -48,7 +43,6 @@ class Version003 extends AbstractMigration implements ContainerAwareInterface
     */
     public function preDown(Schema $schema)
     {
-        $this->tyrClient = $this->container->get('canal_tp_tyr.api');
         $this->fenrirClient = $this->container->get('canal_tp_fenrir.api');
     }
 
@@ -57,7 +51,6 @@ class Version003 extends AbstractMigration implements ContainerAwareInterface
     */
     public function preUp(Schema $schema)
     {
-        $this->tyrClient = $this->container->get('canal_tp_tyr.api');
         $this->fenrirClient = $this->container->get('canal_tp_fenrir.api');
     }
 
@@ -106,7 +99,9 @@ class Version003 extends AbstractMigration implements ContainerAwareInterface
         $this->addSql('ALTER TABLE public.tr_customer_cus DROP COLUMN fenrir_id;');
 
         foreach ($this->fenrirClient->getUsers() as $user) {
-            $this->fenrirClient->deleteUser($user->id);
+            if ($user->origin->name == self::NMM_ORIGIN) {
+                $this->fenrirClient->deleteUser($user->id);
+            }
         }
 
         $origins = $this->fenrirClient->getOrigins();
