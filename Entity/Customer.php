@@ -45,6 +45,11 @@ class Customer extends \CanalTP\SamCoreBundle\Entity\AbstractEntity implements C
     private $locked;
 
     /**
+     * @var integer
+     */
+    private $fenrirId;
+
+    /**
      *
      * @var Application
      */
@@ -195,6 +200,29 @@ class Customer extends \CanalTP\SamCoreBundle\Entity\AbstractEntity implements C
     public function getLocked()
     {
         return $this->locked;
+    }
+
+    /**
+     * Get FenrirId
+     *
+     * @return integer
+     */
+    public function getFenrirId()
+    {
+        return $this->fenrirId;
+    }
+
+    /**
+     * Set FenrirId
+     *
+     * @param integer $fenrirId
+     * @return Customer
+     */
+    public function setFenrirId($fenrirId)
+    {
+        $this->fenrirId = $fenrirId;
+
+        return $this;
     }
 
     public function setApplications($applications)
