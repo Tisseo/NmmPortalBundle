@@ -5,6 +5,9 @@
     "keywords": [],
     "homepage": "https://github.com/CanalTP/NmmPortalBundle",
     "license": "AGPLv3",
+    "config": {
+        "secure-http": false
+    },
     "authors": [
         {
             "name": "Rémy Abi-Khalil",
