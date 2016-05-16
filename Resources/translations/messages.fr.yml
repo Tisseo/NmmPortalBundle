@@ -15,3 +15,6 @@ navitiaUser:
 customer:
     token:
         placeholder: Token of navitia
+    list:
+        action:
+            edit: Editer
