@@ -5,7 +5,7 @@ Feature: Customer List
 
     Scenario: Show page link
       When I am on "/admin/customer"
-      Then I should see an "#show-btn" element
+      Then I should see an "#show-link" element
 
     Scenario: Edit page link
       When I am on "/admin/customer"
