@@ -14,6 +14,10 @@ sam_customer_edit:
     pattern:  /customer/{id}/edit
     defaults: { _controller: CanalTPSamCoreBundle:Customer:edit }
 
+sam_customer_show:
+    pattern:  /customer/{id}/show
+    defaults: { _controller: CanalTPSamCoreBundle:Customer:show }
+
 canal_tp_sam_network_list_json:
     pattern: /coverage/{externalCoverageId}/networks
     defaults: { _controller: CanalTPSamCoreBundle:Customer:byCoverage }
@@ -27,7 +31,7 @@ canal_tp_sam_network_check_permission_json:
         token: -?[a-zA-Z0-9_\-:]*
     options:
         expose: true
-        
+
 sam_customer_regeneratetoken:
     pattern:  /customer/{id}/token/{appId}/regenerate
     defaults: { _controller: CanalTPSamCoreBundle:Customer:regenerateToken }
@@ -44,19 +48,19 @@ sam_customer_listtokens:
 nmm_navitiaio_user:
     pattern:  /navitiaio/users
     defaults: { _controller: CanalTPNmmPortalBundle:NavitiaUser:list }
-    
+
 nmm_navitiaio_new:
     pattern:  /navitiaio/new
     defaults: { _controller: CanalTPNmmPortalBundle:NavitiaUser:new }
-    
+
 nmm_navitiaio_user_edit:
     pattern:  /navitiaio/users/{id}/edit
     defaults: { _controller: CanalTPNmmPortalBundle:NavitiaUser:edit }
-    
+
 nmm_navitiaio_user_listtokens:
     pattern:  /navitiaio/users/{id}/tokens
     defaults: { _controller: CanalTPNmmPortalBundle:NavitiaUser:listTokens }
-    
+
 nmm_navitiaio_user_regeneratetoken:
     pattern:  /navitiaio/users/{id}/tokens/regenerate
     defaults: { _controller: CanalTPNmmPortalBundle:NavitiaUser:regenerateToken }

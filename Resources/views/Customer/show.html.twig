@@ -1,0 +1,15 @@
+{% extends "CanalTPSamCoreBundle::generic_list.html.twig" %}
+
+{% block left_menu -%}
+    <a class="btn btn-default" href="{{ path('sam_customer_list') }}">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        {{'customer.list'|trans}}
+    </a>
+    <a class="btn btn-primary" href="{{ path('sam_customer_edit', { 'id': customer.id }) }}">
+        <span class="glyphicon glyphicon-edit array"></span> {{'customer.edit.action'|trans}}
+    </a>
+{% endblock %}
+
+{% block main_content -%}
+    <h1 id="title" >{{ customer.name }}</h1>
+{% endblock %}
