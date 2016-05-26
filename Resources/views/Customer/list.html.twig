@@ -1,0 +1,89 @@
+{% extends "CanalTPSamCoreBundle::generic_list.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/canaltpsamcore/css/customer.css' %}
+         <link rel="stylesheet" href="{{ asset_url }}?{{ assets_version }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block left_menu -%}
+    {% include 'CanalTPSamCoreBundle:Customer:left_menu.html.twig' %}
+{% endblock %}
+
+{% block table_head -%}
+    <th>{{ 'customer.name'|trans }}</th>
+    <th>{{ 'customer.logo'|trans }}</th>
+    <th>{{ 'customer.creation_date'|trans }}</th>
+    <th>{{ 'customer.actions'|trans }}</th>
+{% endblock %}
+
+{% block table_body -%}
+    {% if customers|length == 0 %}
+        <tr>
+            <td colspan="4">
+                {{'global.no_items'|trans}}
+            </td>
+        </tr>
+    {% endif %}
+    {% for customer in customers %}
+        <tr class="customer-row" customer-id="{{ customer.id }}">
+            <td><a id="show-link" href="{{ path('sam_customer_show', { 'id': customer.id }) }}">{{ customer.name }}</a></td>
+            <td><img src="{{ customer.getWebLogoPath }}" class="logo-customer-small" alt="{{ customer.name }} logo"/></td>
+            <td>{{ customer.created.format('d/m/Y') }}</td>
+            <td class="action">
+                <div class="btn-group">
+                    <a id="edit-btn" class="btn btn-default" href="{{ path('sam_customer_edit', { 'id': customer.id }) }}">
+                        <span class="glyphicon glyphicon-edit array"></span> {{'customer.list.action.edit'|trans}}
+                    </a>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">{{'ctp_core.toggle_menu'|trans}}</span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a class="danger" href="{{ path('sam_customer_listtokens', { 'id': customer.id }) }}">
+                                <span class="glyphicon glyphicon-check array"></span> {{'global.actions.listtokens'|trans}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+
+    {% endfor %}
+{% endblock %}
+
+{% block list_pagination -%}
+     <div class="pager">
+        <li><a class="prev" href="#">&laquo;</a></li>
+        <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+        <li><a class="next" href="#">&raquo;</a></li>
+    </div>
+ {% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        require(['jquery_tablesorter_pager'], function(tableSorter) {
+            $(function() {
+                var pagerOptions = {
+                    // target the pager markup - see the HTML block below
+                    container: $(".pager"),
+                    // output string - default is '{page}/{totalPages}'; possible variables: {page}, {totalPages}, {startRow}, {endRow} and {totalRows}
+                    output: '{startRow} - {endRow} / {filteredRows} ({totalRows})',
+                    // if true, the table will remain the same height no matter how many records are displayed. The space is made up by an empty
+                    // table row set to a height to compensate; default is false
+                    fixedHeight: true,
+                    // remove rows from the table to speed up the sort of large tables.
+                    // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+                    removeRows: false,
+                    // go to page selector - select dropdown that sets the current page
+                    cssGoto: '.gotoPage',
+                    size: 50
+                };
+
+                $("#table").tablesorter().tablesorterPager(pagerOptions);
+            });
+        });
+    </script>
+{% endblock %}

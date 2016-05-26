@@ -38,6 +38,26 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
         );
     }
 
+    public function showAction($id)
+    {
+        $this->isGranted('BUSINESS_MANAGE_CLIENT');
+
+        $customer = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('CanalTPNmmPortalBundle:Customer')
+            ->find($id);
+
+        if (is_null($customer)) {
+            throw $this->createNotFoundException();
+        }
+        return $this->render(
+            'CanalTPSamCoreBundle:Customer:show.html.twig',
+            array(
+                'customer' => $customer
+            )
+        );
+    }
+
     private function dispatchEvent($form, $type)
     {
         $event = new CustomerEvent($form->getData());

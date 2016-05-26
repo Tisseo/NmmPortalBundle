@@ -45,7 +45,6 @@ class Customer extends \CanalTP\SamCoreBundle\Entity\AbstractEntity implements C
     private $locked;
 
     /**
-     *
      * @var Application
      */
     protected $applications;
@@ -133,7 +132,7 @@ class Customer extends \CanalTP\SamCoreBundle\Entity\AbstractEntity implements C
 
     public function getPerimeters()
     {
-        return $this->getNavitiaEntity()->getPerimeters();;
+        return $this->getNavitiaEntity()->getPerimeters();
     }
 
     public function setPerimeters($perimeters)
@@ -227,8 +226,8 @@ class Customer extends \CanalTP\SamCoreBundle\Entity\AbstractEntity implements C
     {
         return (
             $this->getApplications()->filter(
-                function($customerApplication) {
-                   return ($customerApplication->getIsActive());
+                function ($customerApplication) {
+                    return ($customerApplication->getIsActive());
                 }
             )
         );

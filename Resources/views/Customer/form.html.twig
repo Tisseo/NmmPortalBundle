@@ -2,6 +2,10 @@
 
 {% block left_menu -%}
     {% include 'CanalTPSamCoreBundle:Customer:left_menu.html.twig' %}
+    <a class="btn btn-default icons-wrapper" href="{{ path('sam_customer_list') }}">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        {{'customer.list'|trans}}
+    </a>
 {% endblock %}
 
 
