@@ -45,12 +45,6 @@ class Customer extends \CanalTP\SamCoreBundle\Entity\AbstractEntity implements C
     private $locked;
 
     /**
-     * @var integer
-     */
-    private $fenrirId;
-
-    /**
-     *
      * @var Application
      */
     protected $applications;
@@ -138,7 +132,7 @@ class Customer extends \CanalTP\SamCoreBundle\Entity\AbstractEntity implements C
 
     public function getPerimeters()
     {
-        return $this->getNavitiaEntity()->getPerimeters();;
+        return $this->getNavitiaEntity()->getPerimeters();
     }
 
     public function setPerimeters($perimeters)
@@ -202,29 +196,6 @@ class Customer extends \CanalTP\SamCoreBundle\Entity\AbstractEntity implements C
         return $this->locked;
     }
 
-    /**
-     * Get FenrirId
-     *
-     * @return integer
-     */
-    public function getFenrirId()
-    {
-        return $this->fenrirId;
-    }
-
-    /**
-     * Set FenrirId
-     *
-     * @param integer $fenrirId
-     * @return Customer
-     */
-    public function setFenrirId($fenrirId)
-    {
-        $this->fenrirId = $fenrirId;
-
-        return $this;
-    }
-
     public function setApplications($applications)
     {
         $this->applications = $applications;
@@ -255,8 +226,8 @@ class Customer extends \CanalTP\SamCoreBundle\Entity\AbstractEntity implements C
     {
         return (
             $this->getApplications()->filter(
-                function($customerApplication) {
-                   return ($customerApplication->getIsActive());
+                function ($customerApplication) {
+                    return ($customerApplication->getIsActive());
                 }
             )
         );
