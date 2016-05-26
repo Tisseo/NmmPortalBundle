@@ -33,10 +33,6 @@ CanalTP\NmmPortalBundle\Entity\Customer:
             type: boolean
             column: cus_locked
             nullable: false
-        fenrirId:
-            type: integer
-            column: fenrir_id
-            nullable: false
         created:
             type: datetime
             column: cus_created
