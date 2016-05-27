@@ -5,9 +5,6 @@
     "keywords": [],
     "homepage": "https://github.com/CanalTP/NmmPortalBundle",
     "license": "AGPLv3",
-    "config": {
-        "secure-http": false
-    },
     "authors": [
         {
             "name": "Rémy Abi-Khalil",
@@ -36,7 +33,6 @@
     ],
     "require": {
         "canaltp/sam-core-bridge-bundle": "^1.0",
-        "canaltp/fenrir-api-client-bundle": "^1.0",
         "symfony/translation": "2.6.*",
         "symfony/security": "2.6.*"
     },
