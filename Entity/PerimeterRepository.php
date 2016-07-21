@@ -23,31 +23,4 @@ class PerimeterRepository extends EntityRepository
 
         return $query->getResult();
     }
-
-    /**
-     * Get an array of networks id by external coverage id
-     *
-     * @param string $externalCoverageId External coverage id
-     * @param string $applicationCanonicalName Application canonical Name
-     *
-     * @return array Array of networks id by external coverage id
-     */
-    public function findNetWorkIdsByExternalCoverageIdAndApplication($externalCoverageId, $applicationCanonicalName)
-    {
-        $qb = $this->createQueryBuilder('per');
-        $qb
-            ->select('per.externalNetworkId')
-            ->where('per.externalCoverageId=:externalCoverageId')
-            ->leftJoin('per.navitiaEntity', 'ne')
-            ->leftJoin('ne.customer', 'cus')
-            ->leftJoin('cus.applications', 'ca', 'WITH', 'ca.isActive=True')
-            ->leftJoin('ca.application', 'app')
-            ->andWhere('app.canonicalName=:applicationCanonicalName')
-            ->groupBy('per.externalNetworkId')
-            ->setParameter('externalCoverageId', $externalCoverageId)
-            ->setParameter('applicationCanonicalName', $applicationCanonicalName)
-        ;
-
-        return array_map('current', $qb->getQuery()->getResult());
-    }
 }
