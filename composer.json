@@ -34,6 +34,7 @@
     "require": {
         "canaltp/sam-core-bridge-bundle": "^1.0",
         "canaltp/navitia-profiler-bundle": "~0.0",
+        "canaltp/navitia" : "~1.2",
         "symfony/translation": "2.6.*",
         "symfony/security": "2.6.*"
     },
