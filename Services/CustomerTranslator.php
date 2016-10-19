@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
+use CanalTP\SamEcoreUserManagerBundle\Entity\User;
 
 /**
  * CustomerTranslator.(Overload Symfony\Component\Translation\Translator)
@@ -20,14 +21,16 @@ class CustomerTranslator extends Translator implements TranslatorInterface, Tran
     {
         $token = $this->container->get('security.context')->getToken();
 
-        if ($this->customerId === null && $token instanceof TokenInterface && $token->getUser() != 'anon.') {
-            $this->customerId = $token->getUser()->getCustomer()->getIdentifier();
+        if ($token instanceof TokenInterface && $token->getUser() instanceof User) { 
+            if ($this->customerId === null && $token->getUser() != 'anon.') {
+                $this->customerId = $token->getUser()->getCustomer()->getIdentifier();
+            }
         }
-
+        
         if ($domain === null && $this->customerId !== null && $this->catalogues[$locale]->has((string) $id, $this->customerId)) {
             $domain = $this->customerId;
         }
-
+        
         return ($domain);
     }
 
