@@ -46,24 +46,3 @@ sam_customer_regeneratealltokens:
 sam_customer_listtokens:
     pattern:  /customer/{id}/tokens
     defaults: { _controller: CanalTPSamCoreBundle:Customer:listTokens }
-
-#NMM
-nmm_navitiaio_user:
-    pattern:  /navitiaio/users
-    defaults: { _controller: CanalTPNmmPortalBundle:NavitiaUser:list }
-
-nmm_navitiaio_new:
-    pattern:  /navitiaio/new
-    defaults: { _controller: CanalTPNmmPortalBundle:NavitiaUser:new }
-
-nmm_navitiaio_user_edit:
-    pattern:  /navitiaio/users/{id}/edit
-    defaults: { _controller: CanalTPNmmPortalBundle:NavitiaUser:edit }
-
-nmm_navitiaio_user_listtokens:
-    pattern:  /navitiaio/users/{id}/tokens
-    defaults: { _controller: CanalTPNmmPortalBundle:NavitiaUser:listTokens }
-
-nmm_navitiaio_user_regeneratetoken:
-    pattern:  /navitiaio/users/{id}/tokens/regenerate
-    defaults: { _controller: CanalTPNmmPortalBundle:NavitiaUser:regenerateToken }
