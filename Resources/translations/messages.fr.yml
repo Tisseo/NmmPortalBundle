@@ -1,17 +1,3 @@
-navitiaUser:
-    new.title: Ajouter un utilisateur Navitia.io
-    name: Login
-    email: Email
-    creation_date: Date de création
-    actions: Actions
-    list: Liste des utilisateurs
-    token:
-        label: Token
-        status: État
-        enable: Activé
-        disable: Désactivé
-        unauthorized: Bloqué
-        regenerate: Re-générer
 customer:
     token:
         placeholder: Token of navitia
