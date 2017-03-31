@@ -28,7 +28,7 @@
     {% endif %}
     {% for customer in customers %}
         <tr class="customer-row" customer-id="{{ customer.id }}">
-            <td><a id="show-link" href="{{ path('sam_customer_show', { 'id': customer.id }) }}">{{ customer.name }}</a></td>
+            <td><a id="edit-link" href="{{ path('sam_customer_edit', { 'id': customer.id }) }}">{{ customer.name }}</a></td>
             <td><img src="{{ customer.getWebLogoPath }}" class="logo-customer-small" alt="{{ customer.name }} logo"/></td>
             <td>{{ customer.created.format('d/m/Y') }}</td>
             <td class="action">
@@ -43,7 +43,10 @@
                     <ul class="dropdown-menu pull-right" role="menu">
                         <li>
                             <a class="danger" href="{{ path('sam_customer_listtokens', { 'id': customer.id }) }}">
-                                <span class="glyphicon glyphicon-check array"></span> {{'global.actions.listtokens'|trans}}
+                                <span class="glyphicon glyphicon-barcode array"></span> {{'global.actions.listtokens'|trans}}
+                            </a>
+                            <a class="danger" href="{{ path('sam_customer_show', { 'id': customer.id }) }}">
+                                <span class="glyphicon glyphicon-question-sign array"></span> {{ customer.name }} show page
                             </a>
                         </li>
                     </ul>
