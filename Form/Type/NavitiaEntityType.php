@@ -76,13 +76,15 @@ class NavitiaEntityType extends AbstractType
         );
         $purgeDuplicates = function (FormEvent $event) {
             $data = $event->getData();
+
             if (isset($data['perimeters'])) {
-                $selectedPerims = array();
-                $selectedPerimsId = array();
-                foreach ($data['perimeters'] as $perim) {
-                    if (!in_array($perim['external_network_id'], $selectedPerimsId)){
-                        $selectedPerimsId[] = $perim['external_network_id'];
-                        $selectedPerims[] = $perim;
+                $selectedPerims = [];
+
+                foreach ($data['perimeters'] as $perimeter) {
+                    $key = $perimeter['external_coverage_id'] . '_' . $perimeter['external_network_id'];
+
+                    if (!array_key_exists($key, $selectedPerims)) {
+                        $selectedPerims[$key] = $perimeter;
                     }
                }
                $data['perimeters'] = $selectedPerims;
