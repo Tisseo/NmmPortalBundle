@@ -87,7 +87,7 @@ class NavitiaEntityType extends AbstractType
                         $selectedPerims[$key] = $perimeter;
                     }
                }
-               $data['perimeters'] = $selectedPerims;
+               $data['perimeters'] = array_values($selectedPerims);
                $event->setData($data);
            }
         };
