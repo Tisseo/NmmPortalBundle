@@ -69,21 +69,22 @@ class PerimeterType extends AbstractType
                 $externalCoverageId = (is_array($data) ? $data['external_coverage_id'] : $data->getExternalCoverageId());
                 $externalNetworkId = (is_array($data) ? $data['external_network_id'] : $data->getExternalNetworkId());
 
-                $form->remove('external_network_id');
-                $networks = $this->navitia->getNetWorks($externalCoverageId);
+                if (in_array($externalCoverageId, $this->coverages)) {
+                    $form->remove('external_network_id');
+                    $networks = $this->navitia->getNetWorks($externalCoverageId);
 
-
-                $form->add(
-                    $formFactory->createNamed(
-                        'external_network_id',
-                        'choice',
-                        $externalNetworkId,
-                        array(
-                            'auto_initialize' => false,
-                            'choices' => $networks
+                    $form->add(
+                        $formFactory->createNamed(
+                            'external_network_id',
+                            'choice',
+                            $externalNetworkId,
+                            array(
+                                'auto_initialize' => false,
+                                'choices' => $networks
+                            )
                         )
-                    )
-                );
+                    );
+                }
             }
         };
 
