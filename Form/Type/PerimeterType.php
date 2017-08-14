@@ -71,7 +71,7 @@ class PerimeterType extends AbstractType
                     $data['external_coverage_id'] : $data->getExternalCoverageId());
                 $externalNetworkId = (is_array($data) ?
                     $data['external_network_id'] : $data->getExternalNetworkId());
-
+                // Enable edit customer even with a non existent coverage
                 if (in_array($externalCoverageId, $this->coverages)) {
                     $form->remove('external_network_id');
                     $networks = $this->navitia->getNetWorks($externalCoverageId);
@@ -89,11 +89,13 @@ class PerimeterType extends AbstractType
                         )
                     );
                     if (!array_key_exists($externalNetworkId, $networks)) {
+                        // Add message on old network selected
                         $form->get('external_network_id')->addError(
                             new FormError('customer.network.undefined', null, ['%network%' => $externalNetworkId])
                         );
                     }
                 } else {
+                    // Add message on old coverage selected
                     $form->get('external_coverage_id')->addError(
                         new FormError('customer.coverage.undefined', null, ['%coverage%' => $externalCoverageId])
                     );
