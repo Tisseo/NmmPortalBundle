@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -66,8 +67,10 @@ class PerimeterType extends AbstractType
             $data = $event->getData();
             $form = $event->getForm();
             if (!is_null($data) && $this->withPerimeters) {
-                $externalCoverageId = (is_array($data) ? $data['external_coverage_id'] : $data->getExternalCoverageId());
-                $externalNetworkId = (is_array($data) ? $data['external_network_id'] : $data->getExternalNetworkId());
+                $externalCoverageId = (is_array($data) ?
+                    $data['external_coverage_id'] : $data->getExternalCoverageId());
+                $externalNetworkId = (is_array($data) ?
+                    $data['external_network_id'] : $data->getExternalNetworkId());
 
                 if (in_array($externalCoverageId, $this->coverages)) {
                     $form->remove('external_network_id');
@@ -80,9 +83,19 @@ class PerimeterType extends AbstractType
                             $externalNetworkId,
                             array(
                                 'auto_initialize' => false,
+                                'empty_value' => 'global.please_choose',
                                 'choices' => $networks
                             )
                         )
+                    );
+                    if (!array_key_exists($externalNetworkId, $networks)) {
+                        $form->get('external_network_id')->addError(
+                            new FormError('customer.network.undefined', null, ['%network%' => $externalNetworkId])
+                        );
+                    }
+                } else {
+                    $form->get('external_coverage_id')->addError(
+                        new FormError('customer.coverage.undefined', null, ['%coverage%' => $externalCoverageId])
                     );
                 }
             }
