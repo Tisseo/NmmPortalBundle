@@ -434,3 +434,15 @@ li.craue_formflow_current_step {
 .ie8 input {
     font-family: Arial;
 }
+
+/* form select infos errors */
+ul.help-block {
+    padding-left: 0;
+}
+.help-block li{
+    list-style: none;
+    padding:.8em;
+    border: dashed 1px #d43f3a;
+    background: #efefef;
+    color: black;
+}
