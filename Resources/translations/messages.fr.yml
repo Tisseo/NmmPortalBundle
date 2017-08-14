@@ -4,3 +4,7 @@ customer:
     list:
         action:
             edit: Editer
+    coverage:
+        undefined: %coverage% n'existe plus
+    network:
+        undefined: %network% n'existe plus
