@@ -74,7 +74,8 @@ class PerimeterType extends AbstractType
                 if (in_array($externalCoverageId, $this->coverages)) {
                     $form->remove('external_network_id');
                     $networks = $this->navitia->getNetWorks($externalCoverageId);
-                    $networks[''] = 'global.please_choose';
+                    asort($networks);
+                    $networks = array_merge(['' => 'global.please_choose'], $networks);
                     $form->add(
                         $formFactory->createNamed(
                             'external_network_id',
