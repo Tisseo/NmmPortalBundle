@@ -38,6 +38,7 @@ class PerimeterType extends AbstractType
             $this->coverages[$coverage->id] = $coverage->id;
         }
         asort($this->coverages);
+        $this->coverages = array_merge(['' => 'global.please_choose'], $this->coverages);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -45,20 +46,18 @@ class PerimeterType extends AbstractType
         $builder->add(
             'external_coverage_id',
             'choice',
-            array(
-                'choices' => $this->coverages,
-                'empty_value' => 'global.please_choose'
-            )
+            [
+                'choices' => $this->coverages
+            ]
         );
 
         if ($this->withPerimeters) {
             $builder->add(
                 'external_network_id',
                 'choice',
-                array(
-                    'choices' => array(),
-                    'empty_value' => 'global.please_choose'
-                )
+                [
+                    'choices' => ['' => 'global.please_choose']
+                ]
             );
         }
 
@@ -75,7 +74,8 @@ class PerimeterType extends AbstractType
                 if (in_array($externalCoverageId, $this->coverages)) {
                     $form->remove('external_network_id');
                     $networks = $this->navitia->getNetWorks($externalCoverageId);
-
+                    asort($networks);
+                    $networks = array_merge(['' => 'global.please_choose'], $networks);
                     $form->add(
                         $formFactory->createNamed(
                             'external_network_id',
@@ -83,7 +83,6 @@ class PerimeterType extends AbstractType
                             $externalNetworkId,
                             array(
                                 'auto_initialize' => false,
-                                'empty_value' => 'global.please_choose',
                                 'choices' => $networks
                             )
                         )
