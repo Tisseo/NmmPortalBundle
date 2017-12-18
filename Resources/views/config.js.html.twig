@@ -18,7 +18,9 @@ var require = {
         jquery_limit:                   'components/jquery/limit/jquery.limit-1.2',
         bootstrap:                      'js/bootstrap',
         'bootstrap-extensions/table':   'components/bootstrap-extensions/table/js/bootstrap-table.min',
-        'bootstrap-extensions/locale_fr-FR':        'components/bootstrap-extensions/table/js/locale/bootstrap-table-fr-FR',
+        bootstrap_extensions_table_export:   'components/bootstrap-extensions/table/js/export/bootstrap-table-export.min',
+        jquery_table_export:            'components/jquery/table_export/table-export.min',
+        'bootstrap-extensions/locale_fr-FR':   'components/bootstrap-extensions/table/js/locale/bootstrap-table-fr-FR',
         'bootstrap/datepicker':         'components/bootstrap-datepicker/bootstrap-datepicker-built',
         'bootstrap/datepicker/fr':      'bundles/canaltpsamcore/js/bootstrap-datepicker.fr',
         // routes
@@ -40,6 +42,12 @@ var require = {
     shim: {
         'bootstrap-extensions/table': {
             deps: ['jquery']
+        },
+        'jquery_table_export': {
+            deps: ['jquery']
+        },
+        bootstrap_extensions_table_export: {
+            deps: ['jquery', 'jquery_table_export', 'bootstrap-extensions/table']
         },
         'bootstrap-extensions/locale_fr-FR': {
             deps: ['bootstrap-extensions/table']
