@@ -190,9 +190,12 @@ hr.black{
 #security-login-form{
     margin-top:150px;
 }
-#left-menu{
-    padding-top: 25px;
+.admin-menu{
+    padding-bottom: 20px;
 }
+    .admin-menu .btn{
+        margin-bottom: 5px;
+    }
 .collection-container .input-group{
     margin-bottom:10px;
 }
