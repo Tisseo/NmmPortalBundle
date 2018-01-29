@@ -42,11 +42,13 @@
                     </button>
                     <ul class="dropdown-menu pull-right" role="menu">
                         <li>
-                            <a class="danger" href="{{ path('sam_customer_listtokens', { 'id': customer.id }) }}">
-                                <span class="glyphicon glyphicon-barcode array"></span> {{'global.actions.listtokens'|trans}}
-                            </a>
                             <a class="danger" href="{{ path('sam_customer_show', { 'id': customer.id }) }}">
-                                <span class="glyphicon glyphicon-question-sign array"></span> {{ customer.name }} show page
+                                <span class="glyphicon glyphicon-info-sign"></span> {{ customer.name }}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="danger" href="{{ path('sam_customer_listtokens', { 'id': customer.id }) }}">
+                                <span class="glyphicon glyphicon-barcode"></span> {{'global.actions.listtokens'|trans}}
                             </a>
                         </li>
                     </ul>
