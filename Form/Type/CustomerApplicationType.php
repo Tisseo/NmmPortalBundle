@@ -3,8 +3,9 @@
 namespace CanalTP\NmmPortalBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\File;
@@ -33,7 +34,7 @@ class CustomerApplicationType extends AbstractType
 
         $builder->add(
             'token',
-            'text',
+            TextType::class,
             array(
                 'required'  => false
             )
@@ -42,10 +43,14 @@ class CustomerApplicationType extends AbstractType
 
     public function getName()
     {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix() {
         return 'customer_application';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(

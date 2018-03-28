@@ -2,9 +2,11 @@
 
 namespace CanalTP\NmmPortalBundle\Form\Type;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\File;
@@ -31,6 +33,7 @@ class CustomerType extends \CanalTP\SamCoreBundle\Form\Type\CustomerType
     private $applicationsTransformerWithToken = null;
     private $withTyr = false;
 
+    /*
     public function __construct(
         EntityManager $em,
         $coverages,
@@ -40,13 +43,13 @@ class CustomerType extends \CanalTP\SamCoreBundle\Form\Type\CustomerType
         $withTyr
     )
     {
-        $this->em = $em;
+        //$this->em = $em;
         $this->coverages = $coverages;
         $this->navitia = $navitia;
         $this->applicationsTransformer = $applicationsTransformer;
         $this->applicationsTransformerWithToken = $applicationsTransformerWithToken;
         $this->withTyr = $withTyr;
-    }
+    }*/
 
     private function addApplicationsField(FormBuilderInterface $builder)
     {
@@ -54,7 +57,7 @@ class CustomerType extends \CanalTP\SamCoreBundle\Form\Type\CustomerType
         {
             $builder->add(
                 'applications',
-                'entity',
+                EntityType::class,
                 array(
                     'label' => 'customer.applications',
                     'multiple' => true,
@@ -69,10 +72,10 @@ class CustomerType extends \CanalTP\SamCoreBundle\Form\Type\CustomerType
         } else {
             $builder->add(
                 'applications',
-                'collection',
+                CollectionType::class,
                 array(
                     'label' => 'customer.applications',
-                    'type' => new CustomerApplicationType()
+                    'entry_type' => CustomerApplicationType::class
                 )
             )->addModelTransformer($this->applicationsTransformerWithToken);
         }
@@ -82,16 +85,28 @@ class CustomerType extends \CanalTP\SamCoreBundle\Form\Type\CustomerType
     {
         parent::buildForm($builder, $options);
 
+        $this->em = $options['init']['em'];
+        $this->coverages = $options['init']['coverage'];
+        $this->navitia = $options['init']['navitia'];
+        $this->applicationsTransformer = $options['init']['applicationsTransformer'];
+        $this->applicationsTransformerWithToken = $options['init']['applicationsTransformerWithToken'];
+        $this->withTyr = $options['init']['withTyr'];
+
         //it's now in navitiaEntity
         $builder->remove('email');
         $builder->remove('name');
 
         $builder->add(
             'navitiaEntity',
-            new NavitiaEntityType($this->coverages, $this->navitia),
-            array(
-                'label' => 'customer.navitia'
-            )
+            NavitiaEntityType::class,
+            [
+                'label' => 'customer.navitia',
+                'init' => [
+                    'coverages' => $this->coverages,
+                    'navitia' => $this->navitia,
+                    'withPerimeters' => true
+                ],
+            ]
         );
 
         $copyName = function (FormEvent $event) {
@@ -104,18 +119,23 @@ class CustomerType extends \CanalTP\SamCoreBundle\Form\Type\CustomerType
         $this->addApplicationsField($builder);
     }
 
-    public function getName()
-    {
-        return 'customer';
-    }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
                 'data_class' => 'CanalTP\NmmPortalBundle\Entity\Customer',
-                'invalid_message' => 'Tyr error: Email is duplicated'
+                'invalid_message' => 'Tyr error: Email is duplicated',
+                'init' => []
             )
         );
+    }
+
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix() {
+        return 'customer';
     }
 }

@@ -3,8 +3,11 @@
 namespace CanalTP\NmmPortalBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\File;
@@ -26,21 +29,32 @@ class NavitiaEntityType extends AbstractType
     protected $navitia = null;
     protected $withPerimeters = true;
 
-    public function __construct($coverages, $navitia, $withPerimeters = true)
+    /*public function __construct($coverages, $navitia, $withPerimeters = true)
     {
         $this->coverages = $coverages;
         $this->navitia = $navitia;
         $this->withPerimeters = $withPerimeters;
-    }
+    }*/
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->coverages = $options['init']['coverages'];
+        $this->navitia = $options['init']['navitia'];
+        $this->withPerimeters = $options['init']['withPerimeters'];
+
         $builder->add(
             'perimeters',
-            'collection',
+            CollectionType::class,
             array(
                 'label' => 'customer.perimeters',
-                'type' => new PerimeterType($this->coverages, $this->navitia, $this->withPerimeters),
+                //'entry_type' => new PerimeterType($this->coverages, $this->navitia, $this->withPerimeters),
+                'entry_type' => PerimeterType::class,
+                'entry_options' => ['init' => [
+                        'coverages' => $this->coverages,
+                        'navitia' => $this->navitia,
+                        'withPerimeters' => $this->withPerimeters,
+                    ]
+                ],
                 'prototype_name' => '__perimeter_id__',
                 'allow_add' => true,
                 'allow_delete' => true
@@ -49,7 +63,7 @@ class NavitiaEntityType extends AbstractType
 
         $builder->add(
             'email',
-            'text',
+            EmailType::class,
             array(
                 'label' => 'customer.email',
                 'constraints' => array(
@@ -63,7 +77,7 @@ class NavitiaEntityType extends AbstractType
 
         $builder->add(
             'name',
-            'text',
+            TextType::class,
             array(
                 'label' => 'customer.name',
                 'constraints' => array(
@@ -97,14 +111,19 @@ class NavitiaEntityType extends AbstractType
 
     public function getName()
     {
+        return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix() {
         return 'customer';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'CanalTP\NmmPortalBundle\Entity\NavitiaEntity'
+                'data_class' => 'CanalTP\NmmPortalBundle\Entity\NavitiaEntity',
+                'init' => [],
             )
         );
     }

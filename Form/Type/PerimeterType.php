@@ -3,8 +3,9 @@
 namespace CanalTP\NmmPortalBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\FormEvent;
@@ -19,18 +20,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class PerimeterType extends AbstractType
 {
-    private $coverages = null;
+    private $coverages = array();
     private $navitia = null;
     protected $withPerimeters = true;
 
-    public function __construct($coverages, $navitia, $withPerimeters = true)
+    /*public function __construct($coverages, $navitia, $withPerimeters = true)
     {
         $this->navitia = $navitia;
-        $this->coverages = array();
         $this->withPerimeters = $withPerimeters;
 
         $this->fetchCoverages($coverages);
-    }
+    }*/
 
     private function fetchCoverages($coverages)
     {
@@ -43,20 +43,42 @@ class PerimeterType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->navitia = $options['init']['navitia'];
+        $this->withPerimeters = $options['init']['withPerimeters'];
+        $this->fetchCoverages($options['init']['coverages']);
+
         $builder->add(
             'external_coverage_id',
-            'choice',
+            ChoiceType::class,
             [
-                'choices' => $this->coverages
+                'choices' => $this->coverages,
+                'choices_as_values' => true,
+                'choice_name' => function ($val, $key) {
+                    return $key;
+                },
+                'choice_value' => function ($val) {
+                    return $val;
+                },
+
             ]
         );
 
         if ($this->withPerimeters) {
             $builder->add(
                 'external_network_id',
-                'choice',
+                ChoiceType::class,
                 [
-                    'choices' => ['' => 'global.please_choose']
+                    'choices' => ['global.please_choose' => ''],
+                    'choices_as_values' => true,
+                    /*'choice_name' => function ($val, $key) {
+                        return $key;
+                    },
+                    'choice_value' => function ($val) {
+                        return $val;
+                    },
+                    'choice_label' => function ($val) {
+                        return $val;
+                    },*/
                 ]
             );
         }
@@ -65,29 +87,34 @@ class PerimeterType extends AbstractType
         $callback = function (FormEvent $event) use ($formFactory) {
             $data = $event->getData();
             $form = $event->getForm();
+
             if (!is_null($data) && $this->withPerimeters) {
                 $externalCoverageId = (is_array($data) ?
                     $data['external_coverage_id'] : $data->getExternalCoverageId());
+
                 $externalNetworkId = (is_array($data) ?
                     $data['external_network_id'] : $data->getExternalNetworkId());
+
                 // Enable edit customer even with a non existent coverage
                 if (in_array($externalCoverageId, $this->coverages)) {
                     $form->remove('external_network_id');
                     $networks = $this->navitia->getNetWorks($externalCoverageId);
                     asort($networks);
-                    $networks = array_merge(['' => 'global.please_choose'], $networks);
+                    $networks = array_flip(array_merge(['' => 'global.please_choose'], $networks));
+
                     $form->add(
                         $formFactory->createNamed(
                             'external_network_id',
-                            'choice',
+                            ChoiceType::class,
                             $externalNetworkId,
                             array(
                                 'auto_initialize' => false,
-                                'choices' => $networks
+                                'choices' => $networks,
+                                'choices_as_values' => true,
                             )
                         )
                     );
-                    if (!array_key_exists($externalNetworkId, $networks)) {
+                    if (false === array_search($externalNetworkId, $networks)) {
                         // Add message on old network selected
                         $form->get('external_network_id')->addError(
                             new FormError('customer.network.undefined', null, ['%network%' => $externalNetworkId])
@@ -108,14 +135,19 @@ class PerimeterType extends AbstractType
 
     public function getName()
     {
+       return $this->getBlockPrefix();
+    }
+
+    public function getBlockPrefix() {
         return 'perimeter';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'CanalTP\NmmPortalBundle\Entity\Perimeter'
+                'data_class' => 'CanalTP\NmmPortalBundle\Entity\Perimeter',
+                'init' => []
             )
         );
     }

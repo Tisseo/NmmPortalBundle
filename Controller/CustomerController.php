@@ -75,7 +75,7 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
         $this->isGranted(array('BUSINESS_MANAGE_CLIENT', 'BUSINESS_CREATE_CLIENT'));
 
         $coverage = $this->get('sam_navitia')->getCoverages();
-        $form = $this->createForm(
+        /*$form = $this->createForm(
             new CustomerType(
                 $this->getDoctrine()->getManager(),
                 $coverage->regions,
@@ -85,7 +85,17 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
                 ($this->get('service_container')->getParameter('nmm.tyr.url') != null)
             ),
             $customer
-        );
+        );*/
+        $form = $this->createForm(CustomerType::class, $customer, [
+            'init' => [
+                'em' => $this->getDoctrine()->getManager(),
+                'coverage' => $coverage->regions,
+                'navitia' => $this->get('sam_navitia'),
+                'applicationsTransformer' => $this->get('sam_core.customer.application.transformer'),
+                'applicationsTransformerWithToken' => $this->get('nmm.customer.application.transformer_with_token'),
+                'withTyr' => ($this->get('service_container')->getParameter('nmm.tyr.url') != null)
+            ]
+        ]);
 
         $form->handleRequest($request);
         if ($form->isValid() && $this->dispatchEvent($form, SamCoreEvents::EDIT_CLIENT)) {
@@ -110,7 +120,7 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
         $this->isGranted('BUSINESS_CREATE_CLIENT');
 
         $coverage = $this->get('sam_navitia')->getCoverages();
-        $form = $this->createForm(
+        /*$form = $this->createForm(
             new CustomerType(
                 $this->getDoctrine()->getManager(),
                 $coverage->regions,
@@ -119,7 +129,17 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
                 $this->get('nmm.customer.application.transformer_with_token'),
                 ($this->get('service_container')->getParameter('nmm.tyr.url') != null)
             )
-        );
+        );*/
+        $form = $this->createForm(CustomerType::class, null, [
+            'init' => [
+                'em' => $this->getDoctrine()->getManager(),
+                'coverage' => $coverage->regions,
+                'navitia' => $this->get('sam_navitia'),
+                'applicationsTransformer' => $this->get('sam_core.customer.application.transformer'),
+                'applicationsTransformerWithToken' => $this->get('nmm.customer.application.transformer_with_token'),
+                'withTyr' => ($this->get('service_container')->getParameter('nmm.tyr.url') != null)
+            ]
+        ]);
 
         $form->handleRequest($request);
         if ($form->isValid() && $this->dispatchEvent($form, SamCoreEvents::CREATE_CLIENT)) {
