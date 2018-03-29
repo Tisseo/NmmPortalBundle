@@ -179,7 +179,7 @@ hr.black{
     background-color:#d2322d;
 }
 .action .btn.dropdown-toggle {
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     padding: 6px 12px;
 }
 .table thead > tr > th, .table thead > tr > td, .table tbody > tr > th, .table tbody > tr > td, .table tfoot > tr > th, .table tfoot > tr > td {
