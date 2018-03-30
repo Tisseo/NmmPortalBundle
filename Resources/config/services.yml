@@ -32,7 +32,7 @@ services:
 
     navitia_token_manager:
         class: %navitia_token_manager.class%
-        arguments: [%nmm.tyr.url%, @sam_navitia]
+        arguments: ['%nmm.tyr.url%', '@sam_navitia']
 
     # Service de gestion des network
     sam_navitia:
@@ -79,7 +79,7 @@ services:
 
     sam_core.twig.token_extension:
         class: CanalTP\NmmPortalBundle\Twig\TokenExtension
-        arguments: [@navitia_token_manager]
+        arguments: ['@navitia_token_manager']
         tags:
             - { name: twig.extension }
 
@@ -89,7 +89,7 @@ services:
 
     sam_core.navitia_user:
         class: %sam_core.navitia_user.class%
-        arguments: ['@doctrine.orm.entity_manager', @navitia_token_manager]
+        arguments: ['@doctrine.orm.entity_manager', '@navitia_token_manager']
 
     nmm.customer.application.transformer_with_token:
         class: %nmm.customer.application.transformer_with_token.class%
