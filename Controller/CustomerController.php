@@ -98,7 +98,7 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
         ]);
 
         $form->handleRequest($request);
-        if ($form->isValid() && $this->dispatchEvent($form, SamCoreEvents::EDIT_CLIENT)) {
+        if ($form->isSubmitted() && $form->isValid() && $this->dispatchEvent($form, SamCoreEvents::EDIT_CLIENT)) {
             $this->get('sam_core.customer')->save($form->getData());
             $this->addFlashMessage('success', 'customer.flash.edit.success');
 

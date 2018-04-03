@@ -52,7 +52,6 @@ class PerimeterType extends AbstractType
             ChoiceType::class,
             [
                 'choices' => $this->coverages,
-                'choices_as_values' => true,
                 'choice_name' => function ($val, $key) {
                     return $key;
                 },
@@ -69,7 +68,6 @@ class PerimeterType extends AbstractType
                 ChoiceType::class,
                 [
                     'choices' => ['global.please_choose' => ''],
-                    'choices_as_values' => true,
                     /*'choice_name' => function ($val, $key) {
                         return $key;
                     },
@@ -110,7 +108,6 @@ class PerimeterType extends AbstractType
                             array(
                                 'auto_initialize' => false,
                                 'choices' => $networks,
-                                'choices_as_values' => true,
                             )
                         )
                     );

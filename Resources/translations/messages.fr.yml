@@ -5,6 +5,6 @@ customer:
         action:
             edit: Editer
     coverage:
-        undefined: %coverage% n'existe plus
+        undefined: "%coverage% n'existe plus"
     network:
-        undefined: %network% n'existe plus
+        undefined: "%network% n'existe plus"
