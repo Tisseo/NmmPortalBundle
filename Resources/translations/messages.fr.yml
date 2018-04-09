@@ -8,3 +8,4 @@ customer:
         undefined: "%coverage% n'existe plus"
     network:
         undefined: "%network% n'existe plus"
+    add_perimeter: Ajouter un périmètre

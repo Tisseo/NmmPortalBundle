@@ -2,9 +2,6 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets 'bundles/canaltpsamcore/css/customer.css' %}
-         <link rel="stylesheet" href="{{ asset_url }}?{{ assets_version }}" />
-    {% endstylesheets %}
 {% endblock %}
 
 {% block left_menu -%}

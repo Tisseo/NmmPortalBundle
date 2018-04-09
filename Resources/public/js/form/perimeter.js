@@ -1,8 +1,8 @@
 define(
-    ['jquery', 'navitia', 'translations/messages'],
-    function($, Navitia){
+    ['jquery'],
+    function(Navitia){
 
-        var $navApi = new Navitia();
+        var $navApi = Navitia;
         var perimeterForm = {};
 
         var $collectionHolder;

@@ -2,9 +2,6 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets 'bundles/canaltpsamcore/css/customer.css' %}
-         <link rel="stylesheet" href="{{ asset_url }}?{{ assets_version }}" />
-    {% endstylesheets %}
 {% endblock %}
 
 {% block left_menu -%}
@@ -69,7 +66,7 @@
 
 {% block javascripts %}
     <script type="text/javascript">
-        require(['jquery_tablesorter_pager'], function(tableSorter) {
+        /*require(['jquery_tablesorter_pager'], function(tableSorter) {*/
             $(function() {
                 var pagerOptions = {
                     // target the pager markup - see the HTML block below
@@ -89,6 +86,6 @@
 
                 $("#table").tablesorter({dateFormat: 'ddmmyyyy'}).tablesorterPager(pagerOptions);
             });
-        });
+       // });
     </script>
 {% endblock %}
