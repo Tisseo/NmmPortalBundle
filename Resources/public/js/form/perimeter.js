@@ -1,6 +1,6 @@
 define(
-    ['jquery'],
-    function(Navitia){
+    ['translations/default'],
+    function(Navitia, Translator){
 
         var $navApi = Navitia;
         var perimeterForm = {};
@@ -36,8 +36,7 @@ define(
         }
 
         var initPerimeterForm = function addPerimeterForm(index) {
-            console.log('i');
-            console.log(index);
+
             $('#customer_perimeters_' + index + '_external_coverage_id').parent().parent().find('.delete-item').click(function(){
                 
                 $('#perimeter_' + index).remove();
@@ -65,7 +64,6 @@ define(
                         'externalCoverageId': $(this).val()
                     },
                     function(networks){
-                        var network = null;
                         $networkSelect.empty();
                         $networkSelect.append('<option disabled="disabled" selected="selected" value="">' + Translator.trans('global.please_choose', {}, 'messages') + '</option>');
                         for (key in networks) {
