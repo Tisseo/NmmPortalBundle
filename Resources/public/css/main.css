@@ -109,7 +109,7 @@ hr.black{
 }
 #application-navbar{
     background-color:white;
-    margin-top:16px;
+    padding-top: 20px;
     width: 100%;
 }
 #application-navbar .navbar.navbar-default{
@@ -117,6 +117,7 @@ hr.black{
     border-bottom:1px solid #c8c8c8;
     height:55px;
     margin:0 auto;
+    padding-left: 10px;
 }
 #application-navbar .navbar-brand{
     font-weight:bold;
@@ -133,18 +134,18 @@ hr.black{
 #application-navbar .navbar-header{
     float: left;
 }
-#application-navbar .navbar-header > ul > li > a{
+#application-navbar  ul > li > a{
     font-size:14px;
-    height: 55px;
+    height: 54px;
     line-height: 25px;
     padding: 15px 25px;
 }
-#application-navbar .navbar-header > ul > li.active > a{
+#application-navbar  ul > li.active > a{
     background-color: #FFF;
     color: #F60;
     border-bottom: 2px solid #F60;
 }
-.breadcrumb{
+.override-nmm .breadcrumb{
     background-color: #FFF;
     height: 60px;
     margin-bottom: 0;
@@ -162,7 +163,7 @@ hr.black{
     top:0;
     left:0;
 }
-.navbar {
+.navbar, #sam-navbar.navbar {
     border:0;
     margin-bottom:0;
     min-height: 0;
@@ -195,7 +196,7 @@ hr.black{
     margin-top:150px;
 }
 .admin-menu{
-    padding-bottom: 20px;
+    padding: 20px 0;
 }
     .admin-menu .btn{
         margin-bottom: 5px;
