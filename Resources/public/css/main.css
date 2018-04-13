@@ -140,7 +140,9 @@ hr.black{
     line-height: 25px;
     padding: 15px 25px;
 }
-#application-navbar  ul > li.active > a{
+#application-navbar  ul > li.active > a,
+#application-navbar  ul > li.current_ancestor > a
+{
     background-color: #FFF;
     color: #F60;
     border-bottom: 2px solid #F60;
