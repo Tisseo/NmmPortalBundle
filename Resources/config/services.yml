@@ -4,11 +4,6 @@ parameters:
     sam_navitia.class: CanalTP\NmmPortalBundle\Services\Navitia
     navitia_token_manager.class: CanalTP\NmmPortalBundle\Services\NavitiaTokenManager
 
-    #SAM conf
-    sam_core.slugify.class: CanalTP\SamCoreBundle\Slugify
-    sam_core.role_listener.class: CanalTP\SamCoreBundle\Doctrine\RoleListener
-    sam_core.doctrine.entity_listener_resolver.class: CanalTP\SamCoreBundle\Doctrine\EntityListenerResolver
-
     sam_component_authentication_handler.class: CanalTP\SamCoreBundle\Component\Authentication\Handler\LoginSuccessHandler
     sam_user_registration_listener.class: CanalTP\SamCoreBundle\Form\EventListener\RegistrationSuscriber
     # Monitoring
@@ -41,20 +36,6 @@ services:
     nmm.perimeter_manager:
         class: '%nmm.perimeter_manager.class%'
         arguments: ['@doctrine.orm.entity_manager']
-
-    #SAM conf
-    sam_core.slugify:
-        class: '%sam_core.slugify.class%'
-
-    sam_core.role_listener:
-        class: '%sam_core.role_listener.class%'
-        arguments: ['@sam_core.slugify']
-        tags:
-            -  { name: doctrine.entity_listener }
-
-    sam_core.doctrine.entity_listener_resolver:
-        class: '%sam_core.doctrine.entity_listener_resolver.class%'
-        arguments: [ "@service_container" ]
 
     sam.component.authentication.handler.login_success_handler:
         class:          "%sam_component_authentication_handler.class%"
