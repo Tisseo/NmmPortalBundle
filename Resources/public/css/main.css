@@ -456,3 +456,16 @@ ul.help-block {
     background: #efefef;
     color: black;
 }
+
+/* Hide label for checkbox on the page permission */
+form[name='application_role'] .checkbox {
+    text-align:center;
+    padding-top: 0;
+}
+form[name='application_role'] .checkbox label.no-label {
+    visibility: hidden;
+    font-size: 0;
+}
+form[name='application_role'] .checkbox label.no-label input {
+    visibility: visible;
+}
