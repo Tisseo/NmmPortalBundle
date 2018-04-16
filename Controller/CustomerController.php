@@ -23,7 +23,7 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
 {
     public function listAction()
     {
-        $this->isGranted('BUSINESS_MANAGE_CLIENT');
+        $this->checkPermission('BUSINESS_MANAGE_CLIENT');
 
         $customers = $this->getDoctrine()
             ->getManager()
@@ -40,7 +40,7 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
 
     public function showAction($id)
     {
-        $this->isGranted('BUSINESS_MANAGE_CLIENT');
+        $this->checkPermission('BUSINESS_MANAGE_CLIENT');
 
         $customer = $this->getDoctrine()
             ->getManager()
@@ -72,7 +72,7 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
 
     public function editAction(Request $request, CustomerEntity $customer = null)
     {
-        $this->isGranted(array('BUSINESS_MANAGE_CLIENT', 'BUSINESS_CREATE_CLIENT'));
+        $this->checkPermission(array('BUSINESS_MANAGE_CLIENT', 'BUSINESS_CREATE_CLIENT'));
 
         $coverage = $this->get('sam_navitia')->getCoverages();
         /*$form = $this->createForm(
@@ -117,7 +117,7 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
 
     public function newAction(Request $request)
     {
-        $this->isGranted('BUSINESS_CREATE_CLIENT');
+        $this->checkPermission('BUSINESS_CREATE_CLIENT');
 
         $coverage = $this->get('sam_navitia')->getCoverages();
         /*$form = $this->createForm(
