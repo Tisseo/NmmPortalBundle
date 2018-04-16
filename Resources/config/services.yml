@@ -16,9 +16,7 @@ parameters:
 
     sam_core.customer.class: CanalTP\NmmPortalBundle\Services\CustomerManager
     sam_core.navitia_user.class: CanalTP\NmmPortalBundle\Services\NavitiaEntityManager
-    sam_core.customer.application.transformer.class: CanalTP\NmmPortalBundle\Form\DataTransformer\ApplicationToCustomerApplicationTransformer
 
-#    nmm.navitia_entity.class: CanalTP\NmmPortalBundle\Services\NavitiaEntityManager
     nmm.perimeter_manager.class: CanalTP\NmmPortalBundle\Services\PerimeterManager
     nmm.customer.application.transformer_with_token.class: CanalTP\NmmPortalBundle\Form\DataTransformer\ApplicationToCustomerApplicationTransformerWithToken
 
@@ -36,6 +34,7 @@ services:
 
     # Service de gestion des network
     sam_navitia:
+        public: true
         class: '%sam_navitia.class%'
         arguments: ['@navitia_component']
 
@@ -92,5 +91,6 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@navitia_token_manager']
 
     nmm.customer.application.transformer_with_token:
+        public: true
         class: '%nmm.customer.application.transformer_with_token.class%'
         arguments: ['@doctrine.orm.entity_manager', '@navitia_token_manager']
