@@ -142,7 +142,7 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
         ]);
 
         $form->handleRequest($request);
-        if ($form->isValid() && $this->dispatchEvent($form, SamCoreEvents::CREATE_CLIENT)) {
+        if ($form->isSubmitted() && $form->isValid() && $this->dispatchEvent($form, SamCoreEvents::CREATE_CLIENT)) {
             $this->get('sam_core.customer')->save($form->getData());
             $this->addFlashMessage('success', 'customer.flash.creation.success');
 
