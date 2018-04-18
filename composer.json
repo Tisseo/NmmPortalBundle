@@ -35,8 +35,8 @@
         "canaltp/sam-core-bundle": "~3.4",
         "canaltp/navitia-profiler-bundle": "~3.4",
         "canaltp/navitia" : "~1.2",
-        "symfony/translation": "~3.0",
-        "symfony/security": "~3.0"
+        "symfony/translation": "~3.4",
+        "symfony/security": "~3.4"
     },
     "require-dev": {
         "phpunit/phpunit": "4.5.*",
