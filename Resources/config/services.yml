@@ -4,10 +4,10 @@ parameters:
     sam_navitia.class: CanalTP\NmmPortalBundle\Services\Navitia
     navitia_token_manager.class: CanalTP\NmmPortalBundle\Services\NavitiaTokenManager
 
-    sam_component_authentication_handler.class: CanalTP\SamCoreBundle\Component\Authentication\Handler\LoginSuccessHandler
-    sam_user_registration_listener.class: CanalTP\SamCoreBundle\Form\EventListener\RegistrationSuscriber
+    #sam_component_authentication_handler.class: CanalTP\SamCoreBundle\Component\Authentication\Handler\LoginSuccessHandler
+    #sam_user_registration_listener.class: CanalTP\SamCoreBundle\Form\EventListener\RegistrationSuscriber
     # Monitoring
-    sam.business_monitoring.nmm.class: CanalTP\SamCoreBundle\Monitoring\Component
+    #sam.business_monitoring.nmm.class: CanalTP\SamCoreBundle\Monitoring\Component
 
     sam_core.customer.class: CanalTP\NmmPortalBundle\Services\CustomerManager
     sam_core.navitia_user.class: CanalTP\NmmPortalBundle\Services\NavitiaEntityManager
@@ -37,13 +37,13 @@ services:
         class: '%nmm.perimeter_manager.class%'
         arguments: ['@doctrine.orm.entity_manager']
 
-    sam.component.authentication.handler.login_success_handler:
-        class:          "%sam_component_authentication_handler.class%"
-        arguments:  ['@doctrine', '@router', '@session']
+    #sam.component.authentication.handler.login_success_handler:
+    #    class:          "%sam_component_authentication_handler.class%"
+    #    arguments:  ['@doctrine', '@router', '@session']
 
     # Monitoring
-    sam.business_monitoring.nmm:
-        class: "%sam.business_monitoring.nmm.class%"
+#    sam.business_monitoring.nmm:
+#        class: "%sam.business_monitoring.nmm.class%"
 
     nmm.service_monitoring.database.psql:
         class: "%sam.service_monitoring.database.pgsql.class%"

@@ -7,11 +7,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Collections\Criteria;
 use CanalTP\NmmPortalBundle\Entity\Customer as CustomerEntity;
-use CanalTP\SamCoreBundle\Entity\Application as ApplicationEntity;
-use CanalTP\NmmPortalBundle\Entity\Perimeter;
 use CanalTP\NmmPortalBundle\Form\Type\CustomerType;
 use CanalTP\SamCoreBundle\Event\SamCoreEvents;
-use CanalTP\NmmPortalBundle\Event\CustomerEvent;
+use CanalTP\SamCoreBundle\Event\CustomerEvent;
 use CanalTP\SamCoreBundle\Exception\CustomerEventException;
 
 /**
@@ -21,6 +19,7 @@ use CanalTP\SamCoreBundle\Exception\CustomerEventException;
  */
 class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractController
 {
+
     public function listAction()
     {
         $this->checkPermission('BUSINESS_MANAGE_CLIENT');
@@ -31,7 +30,7 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
             ->findAll();
 
         return $this->render(
-            'CanalTPSamCoreBundle:Customer:list.html.twig',
+            'CanalTPNmmPortalBundle:Customer:list.html.twig',
             array(
                 'customers' => $customers
             )
@@ -51,7 +50,7 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
             throw $this->createNotFoundException();
         }
         return $this->render(
-            'CanalTPSamCoreBundle:Customer:show.html.twig',
+            'CanalTPNmmPortalBundle:Customer:show.html.twig',
             array(
                 'customer' => $customer
             )
@@ -70,22 +69,12 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
         return (true);
     }
 
+
     public function editAction(Request $request, CustomerEntity $customer = null)
     {
         $this->checkPermission(array('BUSINESS_MANAGE_CLIENT', 'BUSINESS_CREATE_CLIENT'));
 
         $coverage = $this->get('sam_navitia')->getCoverages();
-        /*$form = $this->createForm(
-            new CustomerType(
-                $this->getDoctrine()->getManager(),
-                $coverage->regions,
-                $this->get('sam_navitia'),
-                $this->get('sam_core.customer.application.transformer'),
-                $this->get('nmm.customer.application.transformer_with_token'),
-                ($this->get('service_container')->getParameter('nmm.tyr.url') != null)
-            ),
-            $customer
-        );*/
         $form = $this->createForm(CustomerType::class, $customer, [
             'init' => [
                 'em' => $this->getDoctrine()->getManager(),
@@ -120,16 +109,6 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
         $this->checkPermission('BUSINESS_CREATE_CLIENT');
 
         $coverage = $this->get('sam_navitia')->getCoverages();
-        /*$form = $this->createForm(
-            new CustomerType(
-                $this->getDoctrine()->getManager(),
-                $coverage->regions,
-                $this->get('sam_navitia'),
-                $this->get('sam_core.customer.application.transformer'),
-                $this->get('nmm.customer.application.transformer_with_token'),
-                ($this->get('service_container')->getParameter('nmm.tyr.url') != null)
-            )
-        );*/
         $form = $this->createForm(CustomerType::class, null, [
             'init' => [
                 'em' => $this->getDoctrine()->getManager(),
@@ -185,34 +164,6 @@ class CustomerController extends \CanalTP\SamCoreBundle\Controller\AbstractContr
                 'networks' => $networks
             )
         );
-        $response->setStatusCode($status);
-
-        return $response;
-    }
-
-    public function checkAllowedToNetworkAction($externalCoverageId, $externalNetworkId, $token)
-    {
-        return;
-
-        $response = new JsonResponse();
-        $navitia = $this->get('sam_navitia');
-        $status = Response::HTTP_FORBIDDEN;
-
-        $navitia->setToken($token);
-        try {
-            $networks = $navitia->getNetworks($externalCoverageId);
-        } catch(\Navitia\Component\Exception\NavitiaException $e) {
-            $response->setData(array('status' => $status));
-            $response->setStatusCode($status);
-
-            return $response;
-        }
-
-        if (isset($networks[$externalNetworkId])) {
-            $status = Response::HTTP_OK;
-        }
-
-        $response->setData(array('status' => $status));
         $response->setStatusCode($status);
 
         return $response;
