@@ -32,8 +32,8 @@
         }
     ],
     "require": {
-        "canaltp/sam-core-bundle": "~3.4",
-        "canaltp/navitia-profiler-bundle": "~3.4",
+        "canaltp/sam-core-bundle": "~4.0",
+        "canaltp/navitia-profiler-bundle": "~4.0",
         "canaltp/navitia" : "~1.2",
         "symfony/translation": "~4.0",
         "symfony/security": "~4.0"
