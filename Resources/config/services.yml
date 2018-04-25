@@ -71,6 +71,12 @@ services:
         class: '%sam_core.navitia_user.class%'
         arguments: ['@doctrine.orm.entity_manager', '@navitia_token_manager']
 
+# Customer
+    sam_core.customer:
+        public: true
+        class: '%sam_core.customer.class%'
+        arguments: ["@doctrine.orm.entity_manager", "@navitia_token_manager", "@canal_tp_sam.application.finder"]
+
     nmm.customer.application.transformer_with_token:
         public: true
         class: '%nmm.customer.application.transformer_with_token.class%'
