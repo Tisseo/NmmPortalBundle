@@ -7,19 +7,19 @@ canal_tp_sam_homepage:
 
 sam_customer_list:
     path:  /customer
-    defaults: { _controller: CanalTPSamCoreBundle:Customer:list }
+    defaults: { _controller: CanalTPNmmPortalBundle:Customer:list }
 
 sam_customer_new:
     path:  /customer/new
-    defaults: { _controller: CanalTPSamCoreBundle:Customer:new }
+    defaults: { _controller: CanalTPNmmPortalBundle:Customer:new }
 
 sam_customer_edit:
     path:  /customer/{id}/edit
-    defaults: { _controller: CanalTPSamCoreBundle:Customer:edit }
+    defaults: { _controller: CanalTPNmmPortalBundle:Customer:edit }
 
 sam_customer_show:
     path:  /customer/{id}/show
-    defaults: { _controller: CanalTPSamCoreBundle:Customer:show }
+    defaults: { _controller: CanalTPNmmPortalBundle:Customer:show }
 
 canal_tp_sam_network_list_json:
     path: /coverage/{externalCoverageId}/networks
@@ -27,22 +27,22 @@ canal_tp_sam_network_list_json:
     options:
         expose: true
 
-canal_tp_sam_network_check_permission_json:
-    path: /coverage/{externalCoverageId}/networks/{externalNetworkId}/{token}
-    defaults: { _controller: CanalTPSamCoreBundle:Customer:checkAllowedToNetwork }
-    requirements:
-        token: -?[a-zA-Z0-9_\-:]*
-    options:
-        expose: true
+#canal_tp_sam_network_check_permission_json:
+#    path: /coverage/{externalCoverageId}/networks/{externalNetworkId}/{token}
+#    defaults: { _controller: CanalTPSamCoreBundle:Customer:checkAllowedToNetwork }
+#    requirements:
+#        token: -?[a-zA-Z0-9_\-:]*
+#    options:
+#        expose: true
 
 sam_customer_regeneratetoken:
     path:  /customer/{id}/token/{appId}/regenerate
-    defaults: { _controller: CanalTPSamCoreBundle:Customer:regenerateToken }
+    defaults: { _controller: CanalTPNmmPortalBundle:Customer:regenerateToken }
 
 sam_customer_regeneratealltokens:
     path:  /customer/{id}/tokens/regenerate
-    defaults: { _controller: CanalTPSamCoreBundle:Customer:regenerateTokens }
+    defaults: { _controller: CanalTPNmmPortalBundle:Customer:regenerateTokens }
 
 sam_customer_listtokens:
     path:  /customer/{id}/tokens
-    defaults: { _controller: CanalTPSamCoreBundle:Customer:listTokens }
+    defaults: { _controller: CanalTPNmmPortalBundle:Customer:listTokens }
